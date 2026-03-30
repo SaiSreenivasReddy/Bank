@@ -22,7 +22,7 @@ public class TestFileInput {
         List<BioStatEntry> entries = new ArrayList<>();
         Scanner scanner = new Scanner(file);
         scanner.nextLine();
-        while(scanner.hasNext()){
+        while (scanner.hasNext()) {
             String line = scanner.nextLine();
             System.out.println(line);
             String[] parts = line.split(",");
@@ -38,10 +38,10 @@ public class TestFileInput {
 
         //do the average age
         double totalAge = 0;
-        for (BioStatEntry entry: entries){
+        for (BioStatEntry entry : entries) {
             totalAge = totalAge + entry.getAge();
         }
-        double averageAge = totalAge/entries.size();
+        double averageAge = totalAge / entries.size();
         System.out.println(averageAge);
 
         //do the average age with stream approach
@@ -50,50 +50,87 @@ public class TestFileInput {
                 .mapToInt(BioStatEntry::getAge)
                 .average();
 
-        if (average.isPresent()){
+        if (average.isPresent()) {
             System.out.println(average.getAsDouble());
         }
 
-Map<String,Integer> countByGender= new LinkedHashMap<>();
-for  (BioStatEntry entry: entries){
-    Integer currentCount = countByGender.get(entry.getSex());
-    if(currentCount==null){
-        currentCount=0;
-    }
-    currentCount++;
-    countByGender.put(entry.getSex(),currentCount);
-}
-System.out.println(countByGender);
+        Map<String, Integer> countByGender = new LinkedHashMap<>();
+        for (BioStatEntry entry : entries) {
+            Integer currentCount = countByGender.get(entry.getSex());
+            if (currentCount == null) {
+                currentCount = 0;
+            }
+            currentCount++;
+            countByGender.put(entry.getSex(), currentCount);
+        }
+        System.out.println(countByGender);
 
-        Map<Integer,Integer> countByAge= new LinkedHashMap<>();
-        entries .sort(Comparator.comparing(BioStatEntry::getAge));{
-            for (BioStatEntry entry: entries) {
+        Map<Integer, Integer> countByAge = new LinkedHashMap<>();
+        entries.sort(Comparator.comparing(BioStatEntry::getAge));
+        {
+            for (BioStatEntry entry : entries) {
                 Integer currentCount = countByAge.get(entry.getAge());
-                if(currentCount==null){
-                    currentCount=0;
+                if (currentCount == null) {
+                    currentCount = 0;
                 }
                 currentCount++;
-                countByAge.put(entry.getAge(),currentCount);
+                countByAge.put(entry.getAge(), currentCount);
             }
             System.out.println(countByAge);
         }
-        Map<String,Integer> countByAgeClasses = new LinkedHashMap<>();
+
+
+        // EXAM CODE
+        System.out.println("Exam Code....");
+        //Count by Height
+
+        System.out.println("Count By Height...");
+        Map<Integer, Integer> countByHeight = new LinkedHashMap<>();
+        for (BioStatEntry entry : entries) {
+            Integer currentCount = countByHeight.get(entry.getHeight());
+            if (currentCount == null) {
+                currentCount = 0;
+            }
+            currentCount++;
+            countByHeight.put(entry.getHeight(), currentCount);
+        }
+        System.out.println(countByHeight);
+
+
+        // Count by Weight
+
+        System.out.println("Count By Weight...");
+        Map<Integer, Integer> countByWeight = new LinkedHashMap<>();
+        for (BioStatEntry entry : entries) {
+            Integer currentCount = countByWeight.get(entry.getWeight());
+            if (currentCount == null) {
+                currentCount = 0;
+            }
+            currentCount++;
+            countByWeight.put(entry.getWeight(), currentCount);
+        }
+        System.out.println(countByWeight);
+
+
+
+        // Count by Age Categories
+        System.out.println("Count By Age Categories...");
+        Map<String, Integer> countByAgeClasses = new LinkedHashMap<>();
         entries.sort(Comparator.comparing(BioStatEntry::getAge));
         String oldCategory = "40->";
         String between30_40 = "30->40";
         String before30 = "->30";
-        for (BioStatEntry entry: entries){
+        for (BioStatEntry entry : entries) {
             String category = "";
-            if (entry.getAge() > 40){
+            if (entry.getAge() > 40) {
                 category = oldCategory;
-            }else if (entry.getAge() > 30){
+            } else if (entry.getAge() > 30) {
                 category = between30_40;
-            }else {
+            } else {
                 category = before30;
             }
-
             Integer currentCount = countByAgeClasses.get(category);
-            if (currentCount == null){
+            if (currentCount == null) {
                 currentCount = 0;
             }
             currentCount++;
@@ -104,3 +141,4 @@ System.out.println(countByGender);
 
     }
 }
+
